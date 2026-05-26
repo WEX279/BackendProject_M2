@@ -2,7 +2,7 @@ const express = require ("express");
 
 const app = express()  //importantisimo
 const PORT = 3000;
-
+// const cors = require(cors)
 
 app.use(express.json())
 app.use((req, res, next)=> {
@@ -19,23 +19,29 @@ const manga = [
         { id: 5, name: "Guimi Zhi Zhu", author: "Ai Qianshui de Wuzei", release: "May 2020"}
 ]
 
-app.use(
-    cors({
-        origin: "http://localhost:3000",
-    })
-)
+// app.use(
+//     cors({
+//         origin: "http://localhost:3000",
+//     })
+// )
 
 app.get("/api/manga", (req, res) =>{
     res.json(manga)
 })
 
-
+// Conseguir un id concreto:
 app.get("/api/manga/:id", (req,res) =>{
-    console.log("Parámetros recibdos:", req.params);
-    res.json({id: req.params.id})
+    const id = Number(req.params.id)
+    const data = manga.find((m) => m.id === id)
+
+    if (!data){
+        return res.status(404).json({ error: "Id not found"})
+    } 
+
+    res.json(data)
 })
 
-
+// Añadir un nuevo objeto al array manga
 app.post("/api/manga", (req, res) =>{
     const {name, author, release} = req.body
     console.log(name, author, release)
