@@ -1,21 +1,10 @@
 const express = require("express");
 
 const app = express(); //importantisimo
-const PORT = 3000;
+const PORT = process.env.PORT;
 
-const fs = require("node:fs").promises;
-const path = require("node:path");
-const RUTA = path.join(__dirname, "manga.json");
-
-async function loadManga() {
-  const content = await fs.readFile(RUTA, "utf-8");
-  return JSON.parse(content);
-}
-
-async function saveManga(manga) {
-  await fs.writeFile(RUTA, JSON.stringify(manga, null, 2), "utf-8");
-}
 app.use(express.json());
+
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}]${req.method}${req.url}`);
   next();
@@ -44,7 +33,6 @@ app.post("/api/manga", async (req, res) => {
   const manga = await loadManga();
 
   const { name, author, release, genre } = req.body;
-  console.log(name, author, release)
   if (!name || !author || !release || !genre) {
     return res
       .status(400)
