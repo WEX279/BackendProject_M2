@@ -45,8 +45,8 @@ async function createManga(data) {
 
 async function updateManga(id, data) {
     return await Manga.findByIdAndUpdate(id, data, {
-        new: true, // devuelvo el obj ya editado
-        runValidators: true //
+        new: true,
+        runValidators: true
     })
 }
 

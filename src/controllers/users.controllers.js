@@ -1,16 +1,14 @@
 const Users = require("../models/users.models")
 const bcrypt = require("bcrypt")
 
-async function existingMail(req, res) {
+async function registerUser(req, res) {
     try {   
-    
         const {email, password} = req.body
-        const mail = await Users.findOne({email: email})
+        const existEmail = await Users.validateEmail(email)
 
-        if (mail){
+        if (!email){
             return res.status(409).json({error: "this email has already been registered"})
         }
-
         const passwordHashed = await bcrypt.hash(password, 10)
 
         const newUser = await Users.createUser({
@@ -24,8 +22,33 @@ async function existingMail(req, res) {
         })
     } catch (error) {
         console.error(res.status(500).json({message: "Internal server error"}))
-}}
+}} 
 
-module.exports = {
-    existingMail
+async function loginUser(req, res){
+    try {
+        const {email, password} = req.body;
+
+        const user = await Users.findUserbyEmail(email)
+
+            if(!user){
+                return res.status(401).json({error: "Invalid credentials"})
+            }
+
+        const match = await bcrypt.compare(password, user.password)
+            
+            if(!match){
+                return res.status(401).json({error: "Invalid credentials"})
+            }
+
+        res.status(200).json({
+            message: "correct login",
+            id: user._id,
+            email: user.email
+        })
+
+    } catch (error) {
+        res.status(500).json({message: "Login error"})
+        console.log(error)
+    }
 }
+module.exports = {registerUser, loginUser}

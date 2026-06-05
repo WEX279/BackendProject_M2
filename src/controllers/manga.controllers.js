@@ -9,7 +9,7 @@ async function listManga(req, res) {
     }
 }
 
-async function getManga(req, res) {
+async function getMangaId(req, res) {
     try{
         const id = req.params.id
         const manga = await mangaModels.getMangaById(id)
@@ -19,7 +19,6 @@ async function getManga(req, res) {
         res.status(500).json({error: "Internal server error"})
     }
 }
-
 async function postManga(req, res) {
     try{
         const {name, author, release, genre} = req.body;
@@ -58,7 +57,7 @@ async function banManga(req, res) {
 
 module.exports = {
     listManga,
-    getManga,
+    getMangaId,
     postManga,
     putManga,
     banManga

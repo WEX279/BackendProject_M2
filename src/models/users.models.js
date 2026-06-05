@@ -1,6 +1,6 @@
-const moongose = require("mongoose")
+const mongoose = require("mongoose")
 
-const usrSchema = new moongose.Schema({
+const userSchema = new mongoose.Schema({
     email:{
         type: String,
         required: true,
@@ -12,15 +12,24 @@ const usrSchema = new moongose.Schema({
         type: String,
         required: true
     }
-    
     },
     {
-            timestamps: true,
+        timestamps: true,
     },
 );
 
-const user = moongose.model("User", userSchema)
+const User = mongoose.model("User", userSchema)
 
-module.exports={
-    user
+async function createUser(data) {
+    const newUser = new User(data)
+    return await User.save()
+}
+
+async function validateEmail(email) {
+    return await User.findOne({email: email})
+}
+
+module.exports = {
+    createUser,
+    validateEmail
 }
