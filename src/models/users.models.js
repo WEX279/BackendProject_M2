@@ -22,14 +22,18 @@ const User = mongoose.model("User", userSchema)
 
 async function createUser(data) {
     const newUser = new User(data)
-    return await User.save()
+    return await newUser.save()
 }
 
 async function validateEmail(email) {
-    return await User.findOne({email: email})
+    return await User.findOne({ email: email });
+}
+async function getAllUsers() {
+  return await User.find();
 }
 
 module.exports = {
     createUser,
-    validateEmail
+    validateEmail,
+    getAllUsers
 }

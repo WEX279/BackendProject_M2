@@ -1,5 +1,6 @@
 const {body, validationResult} = require("express-validator")
 
+
 const registerRules = [
     body("email")
         .notEmpty()

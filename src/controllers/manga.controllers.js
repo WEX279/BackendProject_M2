@@ -50,7 +50,7 @@ async function banManga(req, res) {
         res.status(204).json({message: "You`ve deleted this manga:", deletedManga})
     } catch(error){
         console.error("Your manga has NOT been deleted successfully...", error)
-        res.status(500).json({error: "Internl server error"})
+        res.status(500).json({error: "Internal server error"})
     }    
 }
 
