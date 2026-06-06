@@ -25,7 +25,7 @@ async function createUser(data) {
     return await newUser.save()
 }
 
-async function validateEmail(email) {
+async function findUserbyEmail(email) {
     return await User.findOne({ email: email });
 }
 async function getAllUsers() {
@@ -34,6 +34,6 @@ async function getAllUsers() {
 
 module.exports = {
     createUser,
-    validateEmail,
+    findUserbyEmail,
     getAllUsers
 }

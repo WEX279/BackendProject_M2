@@ -11,15 +11,14 @@ router.get(
     usersControllers.whoami
 )
 
+router.get("/", usersControllers.listUsers);
+
 router.post(
     "/register",
     registerRules,
     validate,
     usersControllers.registerUser,
 );
-
-router.get("/", usersControllers.listUsers);
-
 
 router.post(
     "/login",

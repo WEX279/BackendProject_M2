@@ -13,7 +13,7 @@ async function registerUser(req, res) {
         }
 
         const passwordHashed = await bcrypt.hash(password, 10)
-        console.log(passwordHashed);
+
         const newUser = await Users.createUser({
             email,
             password: passwordHashed
@@ -26,16 +26,6 @@ async function registerUser(req, res) {
     } catch (error) {
         res.status(500).json({message: "Internal server error"})
 }
-}
-
-async function listUsers(req, res) {
-  try {
-    const users = await Users.getAllUsers();
-    res.status(200).json(users);
-  } catch (error) {
-    console.error("Error al listar notas:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
-  }
 }
 
 async function loginUser(req, res){
@@ -67,6 +57,16 @@ async function loginUser(req, res){
         res.status(500).json({message: "Login error"})
         console.log(error)
     }
+}
+
+async function listUsers(req, res) {
+  try {
+    const users = await Users.getAllUsers();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error al listar notas:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
 }
 
 function whoami(req, res) {
