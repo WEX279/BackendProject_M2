@@ -5,9 +5,10 @@ const loginRules = [
         .isEmail()
         .withMessage("Non valid email"),
 
-    body("pasword")
-        .isStrongPassword()
-        .withMessage("Obligatory password")
+    body("password")
+        // .isStrongPassword() -> preguntar al profe
+        .isLength({min:6})
+        .withMessage("Wrong password") 
 ]
 
 module.exports = loginRules

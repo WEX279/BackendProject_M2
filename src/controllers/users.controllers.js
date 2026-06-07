@@ -6,7 +6,7 @@ async function registerUser(req, res) {
     try {   
         const {email, password} = req.body
 
-        const existEmail = await Users.validateEmail(email)
+        const existEmail = await Users.findUserbyEmail(email)
 
         if (existEmail){
             return res.status(409).json({error: "this email has already been registered"})
@@ -25,7 +25,7 @@ async function registerUser(req, res) {
         })
     } catch (error) {
         res.status(500).json({message: "Internal server error"})
-}
+    }
 }
 
 async function loginUser(req, res){
@@ -55,8 +55,36 @@ async function loginUser(req, res){
 
     } catch (error) {
         res.status(500).json({message: "Login error"})
-        console.log(error)
     }
+}
+
+
+async function deleteUser(req, res) {
+    try {
+        const {email, password} = req.body;
+
+        const user = Users.findUserbyEmail(email)
+
+        if (!user){
+            return res.status(401).json({error: "Invalid credentials"})
+        }
+
+        // const match = await bcrypt.compare(password, user.password)
+        
+        //     if(!match){
+        //         return res.status(401).json({error: "invalid credential"})
+        //     }
+
+        // const token = jwt.sign({id:user._id}, process.env.JWT_SECRET,{
+        //     expiresIn: "1h"
+        // })
+
+    res.status(200).json({message: "you are able to delete your account now!"})
+
+    } catch (error) {
+        res.status(500).json({error: "internal server error"})    
+    }
+    
 }
 
 async function listUsers(req, res) {
@@ -86,4 +114,10 @@ function whoami(req, res) {
     }
 }
 
-module.exports = {registerUser, loginUser, whoami, listUsers}
+module.exports = {
+    registerUser,
+    loginUser,
+    whoami,
+    listUsers, 
+    deleteUser
+}

@@ -9,6 +9,7 @@ const registerRules = [
     
     body("password")
         .notEmpty()
+        // .isStrongPassword()
         .isLength({min:6})
         .withMessage("Password must have at least 6 characters")
 ]
