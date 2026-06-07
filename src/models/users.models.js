@@ -29,11 +29,15 @@ async function findUserbyEmail(email) {
     return await User.findOne({ email: email });
 }
 async function getAllUsers() {
-  return await User.find();
+    return await User.find();
 }
-
+async function banUser(email) {
+    return await User.findOneAndDelete({ email: email }) 
+}
+ 
 module.exports = {
     createUser,
     findUserbyEmail,
-    getAllUsers
+    getAllUsers,
+    banUser
 }

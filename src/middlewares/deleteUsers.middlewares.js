@@ -6,7 +6,7 @@ const deleteUser = [
         .withMessage("Invalid mail format"),
 
     body("password")
-        .isStrongPassword()
+        .isLength({min:6})
         .withMessage("Wrong password")
 ]
 
