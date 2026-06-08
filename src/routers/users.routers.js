@@ -8,15 +8,15 @@ const validate = require("../middlewares/validate.js")
 
 
 router.get(
+    "/",
+    usersControllers.listUsers
+);
+
+router.get(
     "/profile",
     verifyToken,
     usersControllers.getProfile,
 )
-
-router.get(
-    "/",
-    usersControllers.listUsers
-);
 
 router.post(
     "/register",
@@ -34,6 +34,7 @@ router.post(
 
 router.delete(
     "/delete",
+    verifyToken,
     usersControllers.deleteUser
 )
 

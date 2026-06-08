@@ -3,8 +3,8 @@ const jwt = require("jsonwebtoken")
 function verifyToken(req, res, next){
         try {
             const authHeader = req.headers.authorization;
-            if(!authHeader){
-                return res.status(401).json({message: "token not found"})
+            if(!authHeader || !authHeader.startsWith("Bearer ")){
+                return res.status(401).json({message: "token not found or invalid format"})
             }
 
             const token = authHeader.split(" ")[1]
@@ -16,7 +16,10 @@ function verifyToken(req, res, next){
             next()
 
         } catch (error) {
-            return res.status(500).json({message: "internal erver error"})
+            if(error.name === "TokenExpiredError"){
+                return res.status(401).json({message: "session expired", error})
+            }
+            return res.status(5401).json({message: "internal erver error"})
         }
 };
 
