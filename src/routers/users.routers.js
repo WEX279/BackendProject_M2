@@ -3,7 +3,6 @@ const router = express.Router();
 const usersControllers = require("../controllers/users.controllers.js")
 const loginRules = require("../middlewares/loginrules.middlewares.js");
 const registerRules = require("../middlewares/registerUsers.vallidator.js");
-const deleteUser = require("../middlewares/deleteUsers.middlewares.js")
 const validate = require("../middlewares/validate.js")
 
 
@@ -32,7 +31,6 @@ router.post(
 
 router.delete(
     "/delete",
-    deleteUser,
     usersControllers.deleteUser
 )
 
