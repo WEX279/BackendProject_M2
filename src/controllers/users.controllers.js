@@ -95,27 +95,24 @@ async function listUsers(req, res) {
   }
 }
 
-function whoami(req, res) {
+
+async function getProfile(req, res) {
     try {
-        const authHeader = req.headers.authorization
-            if(!authHeader){
-                return res.status(401).json({message: "No token found"})
-            }
+        const userId = req.user.id
         
-        const token = authHeader.split(" ")[1]
+        const userFound = await Users.getUserById(userId)
 
-        const data = jwt.verify(token, process.env.JWT_SECRET)
+        return res.status(200).json({message: "user found correctly", userFinded: userFound})
 
-        res.status(200).json({message:"valid token", id: data._id})
     } catch (error) {
-        res.status(401).json({"token not found": error})
+        res.status(500).json({message: "internal server error"})
     }
 }
 
 module.exports = {
     registerUser,
     loginUser,
-    whoami,
     listUsers, 
-    deleteUser
+    deleteUser,
+    getProfile
 }

@@ -3,15 +3,18 @@ const router = express.Router();
 const usersControllers = require("../controllers/users.controllers.js")
 const loginRules = require("../middlewares/loginrules.middlewares.js");
 const registerRules = require("../middlewares/registerUsers.vallidator.js");
+const verifyToken = require("../middlewares/verifyToken.js")
 const validate = require("../middlewares/validate.js")
 
 
 router.get(
-    "/whoami",
-    usersControllers.whoami
-);
+    "/profile",
+    verifyToken,
+    usersControllers.getProfile,
+)
 
-router.get("/",
+router.get(
+    "/",
     usersControllers.listUsers
 );
 

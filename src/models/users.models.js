@@ -24,7 +24,9 @@ async function createUser(data) {
     const newUser = new User(data)
     return await newUser.save()
 }
-
+async function getUserById(id) {
+    return await User.findById(id).select("-password")
+}
 async function findUserbyEmail(email) {
     return await User.findOne({ email: email });
 }
@@ -37,6 +39,7 @@ async function banUser(email) {
  
 module.exports = {
     createUser,
+    getUserById,
     findUserbyEmail,
     getAllUsers,
     banUser
