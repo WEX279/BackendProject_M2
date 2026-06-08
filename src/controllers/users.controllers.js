@@ -102,7 +102,7 @@ function whoami(req, res) {
                 return res.status(401).json({message: "No token found"})
             }
         
-        const token = authHeader.split("")[1]
+        const token = authHeader.split(" ")[1]
 
         const data = jwt.verify(token, process.env.JWT_SECRET)
 
