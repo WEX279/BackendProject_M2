@@ -69,6 +69,7 @@ export async function registerUser(req, res) {
         res.status(201).json({
             id: newUser._id,
             email: newUser.email,
+            token: token,
             message: "user registered and loged in!"
         })
         
