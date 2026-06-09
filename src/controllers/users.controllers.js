@@ -35,7 +35,6 @@ export async function loginUser(req, res){
 
 export async function registerUser(req, res) {
     try {   
-        console.log("controllers ok")
         const {email, password} = req.body
 
         const existEmail = await Users.findUserbyEmail(email)
@@ -51,31 +50,33 @@ export async function registerUser(req, res) {
             password: passwordHashed
         });
 
+        const user = await Users.findUserbyEmail(email)
+
+            if(!user){
+                return res.status(401).json({error: "Invalid credentials"})
+            }
+
+        const match = await bcrypt.compare(password, user.password)
+            
+            if(!match){
+                return res.status(401).json({error: "Invalid credentials"})
+            }
+
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+            })
+
         res.status(201).json({
             id: newUser._id,
-            email: newUser.email
+            email: newUser.email,
+            message: "user registered and loged in!"
         })
-        
-        // await loginUser()
-        // return res.status(200).json({message: "user registered and loged in!"})
         
     } catch (error) {
         res.status(500).json({message: "Internal server error"})
     }
 }
 
-export async function getProfile(req, res) {
-    try {
-        const userId = req.user.id
-        
-        const userFound = await Users.getUserById(userId)
-        
-        return res.status(200).json({message: "user found correctly", userFinded: userFound})
-        
-    } catch (error) {
-        res.status(500).json({message: "internal server error"})
-    }
-}
 
 export async function logOut(req, res) {
     try {
@@ -111,6 +112,18 @@ export async function logOut(req, res) {
     }
 }
 
+export async function getProfile(req, res) {
+    try {
+        const userId = req.user.id
+        
+        const userFound = await Users.getUserById(userId)
+        
+        return res.status(200).json({message: "user found correctly", userFinded: userFound})
+        
+    } catch (error) {
+        res.status(500).json({message: "internal server error"})
+    }
+}
 
 export async function listUsers(req, res) {
     try {
