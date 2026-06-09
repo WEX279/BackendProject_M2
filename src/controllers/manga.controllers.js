@@ -1,6 +1,6 @@
-const mangaModels = require("../models/manga.models")
+import * as mangaModels from "../models/manga.models.js"
 
-async function listManga(req, res) {
+export async function listManga(req, res) {
     try{
         const mangas = await mangaModels.getAllManga()
          res.status(200).json(mangas)
@@ -9,7 +9,7 @@ async function listManga(req, res) {
     }
 }
 
-async function getMangaId(req, res) {
+export async function getMangaId(req, res) {
     try{
         const id = req.params.id
         const manga = await mangaModels.getMangaById(id)
@@ -19,7 +19,8 @@ async function getMangaId(req, res) {
         res.status(500).json({error: "Internal server error"})
     }
 }
-async function postManga(req, res) {
+
+export async function postManga(req, res) {
     try{
         const {name, author, release, genre} = req.body;
 
@@ -31,7 +32,7 @@ async function postManga(req, res) {
     }
 }
 
-async function putManga(req, res) {
+export async function putManga(req, res) {
     try{
         const id = req.params.id
         const {name, author, release, genre} = req.body;
@@ -43,7 +44,7 @@ async function putManga(req, res) {
     }
 }
 
-async function banManga(req, res) {
+export async function banManga(req, res) {
     try{
         const id = req.params.id
         const deletedManga = await mangaModels.deleteManga(id)
@@ -52,13 +53,4 @@ async function banManga(req, res) {
         console.error("Your manga has NOT been deleted successfully...", error)
         res.status(500).json({error: "Internal server error"})
     }    
-}
-
-
-module.exports = {
-    listManga,
-    getMangaId,
-    postManga,
-    putManga,
-    banManga
 }

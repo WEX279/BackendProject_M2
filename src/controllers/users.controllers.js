@@ -1,34 +1,9 @@
-const Users = require("../models/users.models")
-const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
+import * as Users from "../models/users.models.js"
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
-async function registerUser(req, res) {
-    try {   
-        const {email, password} = req.body
 
-        const existEmail = await Users.findUserbyEmail(email)
-
-        if (existEmail){
-            return res.status(409).json({error: "this email has already been registered"})
-        }
-
-        const passwordHashed = await bcrypt.hash(password, 10)
-
-        const newUser = await Users.createUser({
-            email,
-            password: passwordHashed
-        });
-
-        res.status(201).json({
-            id: newUser._id,
-            email: newUser.email
-        })
-    } catch (error) {
-        res.status(500).json({message: "Internal server error"})
-    }
-}
-
-async function loginUser(req, res){
+export async function loginUser(req, res){
     try {
         const {email, password} = req.body;
 
@@ -58,7 +33,38 @@ async function loginUser(req, res){
     }
 }
 
-async function getProfile(req, res) {
+export async function registerUser(req, res) {
+    try {   
+        console.log("controllers ok")
+        const {email, password} = req.body
+
+        const existEmail = await Users.findUserbyEmail(email)
+
+        if (existEmail){
+            return res.status(409).json({error: "this email has already been registered"})
+        }
+
+        const passwordHashed = await bcrypt.hash(password, 10)
+
+        const newUser = await Users.createUser({
+            email,
+            password: passwordHashed
+        });
+
+        res.status(201).json({
+            id: newUser._id,
+            email: newUser.email
+        })
+        
+        // await loginUser()
+        // return res.status(200).json({message: "user registered and loged in!"})
+        
+    } catch (error) {
+        res.status(500).json({message: "Internal server error"})
+    }
+}
+
+export async function getProfile(req, res) {
     try {
         const userId = req.user.id
         
@@ -71,7 +77,7 @@ async function getProfile(req, res) {
     }
 }
 
-async function logOut(req, res) {
+export async function logOut(req, res) {
     try {
 
         const {email, password} = req.body;
@@ -106,7 +112,7 @@ async function logOut(req, res) {
 }
 
 
-async function listUsers(req, res) {
+export async function listUsers(req, res) {
     try {
         const users = await Users.getAllUsers();
         res.status(200).json(users);
@@ -116,7 +122,7 @@ async function listUsers(req, res) {
     }
 }
 
-async function deleteUser(req, res) {
+export async function deleteUser(req, res) {
     try {
         const {email, password} = req.body;
 
@@ -139,13 +145,4 @@ async function deleteUser(req, res) {
     } catch (error) {
         res.status(500).json({error: "internal server error"})    
     }    
-}
-
-module.exports = {
-    registerUser,
-    loginUser,
-    getProfile,
-    logOut,
-    listUsers, 
-    deleteUser,
 }

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose"
 
 const userSchema = new mongoose.Schema({
     email:{
@@ -12,39 +12,33 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     }
+
     },
     {
         timestamps: true,
     },
 );
 
-const User = mongoose.model("User", userSchema)
+export const User = mongoose.model("User", userSchema)
 
-async function createUser(data) {
+export async function createUser(data) {
     const newUser = new User(data)
     return await newUser.save()
+    console.log("models ok")
 }
 
-async function getUserById(id) {
+export async function getUserById(id) {
     return await User.findById(id).select("-password")
 }
 
-async function findUserbyEmail(email) {
+export async function findUserbyEmail(email) {
     return await User.findOne({ email: email });
 }
 
-async function getAllUsers() {
+export async function getAllUsers() {
     return await User.find();
 }
 
-async function banUser(email) {
+export async function banUser(email) {
     return await User.findOneAndDelete({ email: email }) 
-}
- 
-module.exports = {
-    createUser,
-    getUserById,
-    findUserbyEmail,
-    getAllUsers,
-    banUser
 }

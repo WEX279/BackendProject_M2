@@ -1,11 +1,10 @@
-const express = require("express")
-const router = express.Router();
-const usersControllers = require("../controllers/users.controllers.js")
-const loginRules = require("../middlewares/loginrules.middlewares.js");
-const registerRules = require("../middlewares/registerUsers.vallidator.js");
-// const match = require("../middlewares/userCheck.middlewares.js")
-const verifyToken = require("../middlewares/verifyToken.js")
-const validate = require("../middlewares/validate.js")
+import express from "express"
+const router = express.Router()
+import * as usersControllers from "../controllers/users.controllers.js"
+import loginRules from "../middlewares/loginrules.middlewares.js";
+import registerRules from "../middlewares/registerUsers.middlewares.js";
+import verifyToken from "../middlewares/verifyToken.js"
+import validate from "../middlewares/validate.js"
 
 
 router.get(
@@ -46,4 +45,4 @@ router.delete(
     usersControllers.deleteUser
 )
 
-module.exports = router
+export default router

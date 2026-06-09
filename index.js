@@ -1,8 +1,7 @@
-require("dotenv").config()
-const app = require("./app"); //importantisimo
-const connect_db = require("./src/config/db")
+import "dotenv/config"
+import app from "./app.js"; //importantisimo
+import connect_db from "./src/config/db.js"
 const PORT = process.env.PORT;
-
 
 async function initServer(req, res) {
   await connect_db()

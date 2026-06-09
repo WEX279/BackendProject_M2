@@ -1,4 +1,4 @@
-const {body, validationResult} = require("express-validator")
+import {body, validationResult} from "express-validator"
 
 
 const registerRules = [
@@ -14,4 +14,4 @@ const registerRules = [
         .withMessage("Password must have at least 6 characters")
 ]
 
-module.exports = registerRules
+export default registerRules

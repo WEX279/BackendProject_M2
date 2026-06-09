@@ -1,11 +1,13 @@
-const express = require("express")
+import express from "express"
 const router = express.Router()
-const mangaController = require("../controllers/manga.controllers")
-const mangaRules = require("../middlewares/mangarules.middlewares")
-const  {param} = require("express-validator");
-const validate = require ("../middlewares/validate")
+import * as mangaController from "../controllers/manga.controllers.js"
+import mangaRules from "../middlewares/mangarules.middlewares.js"
+import {param} from "express-validator";
+import validate from "../middlewares/validate.js"
 
-router.get("/", mangaController.listManga)
+router.get("/",
+     mangaController.listManga
+    )
 
 
 router.get("/:id", 
@@ -47,4 +49,4 @@ router.delete("/:id",
     mangaController.banManga
 )
 
-module.exports = router;
+export default router;

@@ -1,4 +1,4 @@
-const {body} = require("express-validator")
+import {body} from "express-validator"
 
 const loginRules = [
     body("email")
@@ -11,4 +11,4 @@ const loginRules = [
         .withMessage("Wrong password") 
 ]
 
-module.exports = loginRules
+export default loginRules

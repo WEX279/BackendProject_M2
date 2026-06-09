@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const mangaSchema = new mongoose.Schema(
     {
@@ -28,37 +28,29 @@ const mangaSchema = new mongoose.Schema(
     }
 )
 
-const Manga = mongoose.model("Manga", mangaSchema)
+export const Manga = mongoose.model("Manga", mangaSchema)
  
-async function getAllManga() {
+export async function getAllManga() {
     return await Manga.find()
 }
 
-async function getMangaById(id) {
+export async function getMangaById(id) {
     return await Manga.findById(id)
 }
 
-async function createManga(data) {
+export async function createManga(data) {
     const newManga = new Manga(data)
     return await newManga.save()
 }   
 
-async function updateManga(id, data) {
+export async function updateManga(id, data) {
     return await Manga.findByIdAndUpdate(id, data, {
         new: true,
         runValidators: true
     })
 }
 
-async function deleteManga(id){
+export async function deleteManga(id){
     return await Manga.findByIdAndDelete(id)
 }
 
-
-module.exports = {
-    getAllManga,
-    getMangaById,
-    createManga,
-    updateManga,
-    deleteManga
-}

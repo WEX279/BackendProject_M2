@@ -1,7 +1,7 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const mangaRoutes = require("../BackendProject_M2/src/routers/manga.routers")
-const usersRoutes = require("../BackendProject_M2/src/routers/users.routers")
+import mangaRoutes from "../BackendProject_M2/src/routers/manga.routers.js"
+import usersRoutes from "../BackendProject_M2/src/routers/users.routers.js"
 
 app.use(express.json()) // req => usuario
 // Logger: registra el método y la URL
@@ -18,4 +18,4 @@ app.get("/api/health", (req,res) =>{
 app.use("/api/manga", mangaRoutes);
 app.use("/api/user", usersRoutes)
 
-module.exports = app;
+export default app;
