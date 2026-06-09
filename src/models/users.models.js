@@ -24,15 +24,19 @@ async function createUser(data) {
     const newUser = new User(data)
     return await newUser.save()
 }
+
 async function getUserById(id) {
     return await User.findById(id).select("-password")
 }
+
 async function findUserbyEmail(email) {
     return await User.findOne({ email: email });
 }
+
 async function getAllUsers() {
     return await User.find();
 }
+
 async function banUser(email) {
     return await User.findOneAndDelete({ email: email }) 
 }

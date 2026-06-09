@@ -58,6 +58,63 @@ async function loginUser(req, res){
     }
 }
 
+async function getProfile(req, res) {
+    try {
+        const userId = req.user.id
+        
+        const userFound = await Users.getUserById(userId)
+        
+        return res.status(200).json({message: "user found correctly", userFinded: userFound})
+        
+    } catch (error) {
+        res.status(500).json({message: "internal server error"})
+    }
+}
+
+async function logOut(req, res) {
+    try {
+
+        const {email, password} = req.body;
+        
+        const user = await Users.findUserbyEmail(email)
+
+            if(!user){
+                return res.status(404).json({message: "account not found"})
+            }
+            
+        const match = await bcrypt.compare(password, user.password)
+    
+            if(!match){
+                return res.status(400).json({message: "invalid credentials"})
+            }
+
+        const authHeader = req.headers.authorization;
+            if(!authHeader || !authHeader.startsWith("Bearer ")){
+                return res.status(401).json({message: "token not found or invalid format"})
+            }
+
+        const token = "";
+
+
+            if(!token){
+                res.status(200).json({message: "Loged out!"})
+            }
+            console.log(token)
+    } catch (error) {
+        res.status(500).json({message: "internal server error"})
+    }
+}
+
+
+async function listUsers(req, res) {
+    try {
+        const users = await Users.getAllUsers();
+        res.status(200).json(users);
+    } catch (error) {
+        console.error("Error al listar notas:", error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+}
 
 async function deleteUser(req, res) {
     try {
@@ -81,38 +138,14 @@ async function deleteUser(req, res) {
 
     } catch (error) {
         res.status(500).json({error: "internal server error"})    
-    }
-    
-}
-
-async function listUsers(req, res) {
-  try {
-    const users = await Users.getAllUsers();
-    res.status(200).json(users);
-  } catch (error) {
-    console.error("Error al listar notas:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
-  }
-}
-
-
-async function getProfile(req, res) {
-    try {
-        const userId = req.user.id
-        
-        const userFound = await Users.getUserById(userId)
-
-        return res.status(200).json({message: "user found correctly", userFinded: userFound})
-
-    } catch (error) {
-        res.status(500).json({message: "internal server error"})
-    }
+    }    
 }
 
 module.exports = {
     registerUser,
     loginUser,
+    getProfile,
+    logOut,
     listUsers, 
     deleteUser,
-    getProfile
 }
