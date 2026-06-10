@@ -8,7 +8,6 @@ export async function loginUser(req, res){
         const {email, password} = req.body;
 
         const user = await Users.findUserbyEmail(email)
-
             if(!user){
                 return res.status(401).json({error: "Invalid credentials"})
             }
@@ -36,45 +35,59 @@ export async function loginUser(req, res){
 export async function registerUser(req, res) {
     try {   
         const {email, password} = req.body
-
+        
         const existEmail = await Users.findUserbyEmail(email)
-
+        
         if (existEmail){
             return res.status(409).json({error: "this email has already been registered"})
         }
-
         const passwordHashed = await bcrypt.hash(password, 10)
-
+        
         const newUser = await Users.createUser({
             email,
-            password: passwordHashed
+            password: passwordHashed,
         });
-
-        const user = await Users.findUserbyEmail(email)
-
-            if(!user){
-                return res.status(401).json({error: "Invalid credentials"})
-            }
-
-        const match = await bcrypt.compare(password, user.password)
-            
-            if(!match){
-                return res.status(401).json({error: "Invalid credentials"})
-            }
-
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
+        
+        
+        const token = jwt.sign({id: newUser._id}, process.env.JWT_SECRET, {
             expiresIn: "1h",
             })
 
         res.status(201).json({
             id: newUser._id,
             email: newUser.email,
+            favManga: newUser.favManga,
             token: token,
             message: "user registered and loged in!"
         })
         
     } catch (error) {
         res.status(500).json({message: "Internal server error"})
+    }
+}
+
+export async function addToFavs(req, res) {
+    try {
+        const { email, name } = req.body;
+
+    const newManga = await Users.findUserbyEmail()
+    
+    console.log(newManga)
+
+    console.log(manga_id)
+    console.log(user_id)
+    const user = await User.getUserById(
+        userId,
+        {
+            $addToSet: {
+                favManga: manga_id
+            }
+        },
+        {new: true}
+    )
+    res.json({user})
+    } catch (error) {
+        res.status(500).json({message: "internal server error"})        
     }
 }
 

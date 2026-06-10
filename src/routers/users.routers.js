@@ -25,6 +25,18 @@ router.get(
     usersControllers.getProfile,
 )
 
+router.get(
+    "profile/favourites",
+    validate,
+    usersControllers.addToFavs
+)
+
+router.post(
+    "profile/favourites",
+    validate,
+    usersControllers.addToFavs
+)
+
 router.post(
     "/login",
     loginRules,
