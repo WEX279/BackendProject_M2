@@ -8,6 +8,7 @@ const registerRules = [
     
     body("password")
     .notEmpty()
+    .isLength({max: 20})
     .isStrongPassword()
     .withMessage("Password is too weak"),
 ]
