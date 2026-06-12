@@ -1,4 +1,4 @@
-import {body, validationResult} from "express-validator"
+import { body } from "express-validator"
 
 const registerRules = [
     body("email")
@@ -9,7 +9,6 @@ const registerRules = [
     body("password")
     .notEmpty()
     .isStrongPassword()
-    // .isLength({min:6})
     .withMessage("Password is too weak"),
 ]
 

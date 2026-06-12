@@ -1,8 +1,8 @@
 import express from "express"
+import {param} from "express-validator";
 const router = express.Router()
 import * as mangaController from "../controllers/manga.controllers.js"
 import mangaRules from "../middlewares/mangarules.middlewares.js"
-import {param} from "express-validator";
 import validate from "../middlewares/validate.js"
 
 router.get("/",
