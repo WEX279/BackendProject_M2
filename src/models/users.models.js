@@ -1,4 +1,6 @@
 import mongoose from "mongoose"
+import { Manga, getAllManga, getMangaById, createManga, updateManga, deleteManga } from "./manga.models.js";
+
 
 const userSchema = new mongoose.Schema(
     {
@@ -37,8 +39,17 @@ export async function getUserById(id) {
     return await User.findById(id).select("-password")
 }
 
+
 export async function findUserbyEmail(email) {
-    return await User.findOne({ email: email }).populate("favManga");
+    return await User.findOne({ email: email })
+}
+
+export async function updateProfile(email, data) {
+    return await User.findOneAndUpdate(
+        { email: email },
+        data,
+        { returnDocument: 'after' }
+    ).populate("favManga");
 }
 
 export async function getAllUsers() {
@@ -48,3 +59,6 @@ export async function getAllUsers() {
 export async function banUser(email) {
     return await User.findOneAndDelete({ email: email }) 
 }
+
+// --------------------------------------------------------
+ 

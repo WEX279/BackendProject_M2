@@ -38,7 +38,7 @@ router.post(
 // )
 
 router.post(
-    "profile/favourites",
+    "/profile/favourites",
     validate,
     usersControllers.addToFavs
 )

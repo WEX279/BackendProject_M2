@@ -170,26 +170,28 @@ export async function getManga(req, res) {
 
 export async function addToFavs(req, res) {
     try {
-        const { email } = req.body;
+        const { email, name } = req.body;
 
         const user = await Users.findUserbyEmail(email)
-        
-        console.log(user)
+        const manga = await getMangabyName(name)
+        if(!manga || !user){
+            return res.status(400).json({message: "manga or user not found"})
+        }
 
-        const userId = await Users.getUserById(id)
-        // {
-        //     $addToSet: {
-        //         favManga: manga_id
-        //     }
-        // },
-        // {new: true}
+        const updatedProfile = await Users.updateProfile(
+            email,
+            {
+            $addToSet: {
+                favManga: manga._id 
+                }
+            },
+            {returnDocument: 'after'}
+        )
 
+        console.log(updatedProfile)
 
-        console.log(userId)
-        res.json(user)
-        return user
-        return userId
+        return res.status(200).json({updatedProfile, message: "manga added to favs!"})
     }catch (error) {
-        res.status(500).json({message: "internal server error"})        
+        res.status(500).json({message: "internal server error", error: error.message})        
     }
 }
