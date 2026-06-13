@@ -5,7 +5,7 @@ export async function listManga(req, res) {
         const mangas = await mangaModels.getAllManga()
          res.status(200).json(mangas)
     }catch(error){console.error("Something happened trying to add the mangas...", error)
-        res.status(500).json({error:"Internal server error"})
+        res.status(500).json({error:"Internal server error", error: error.message})
     }
 }
 
@@ -16,7 +16,7 @@ export async function getMangaId(req, res) {
         res.status(200).json(manga)
     } catch(error) {
         console.error("Something happened trying to find your manga...", error)
-        res.status(500).json({error: "Internal server error"})
+        res.status(500).json({error: "Internal server error", error: error.message})
     }
 }
 
@@ -28,7 +28,7 @@ export async function postManga(req, res) {
         res.status(201).json(newManga)
     }catch(error){
         console.error("Error addig new manga", error)
-        res.status(500).json({error: "Internal server error"})
+        res.status(500).json({error: "Internal server error", error: error.message})
     }
 }
 
@@ -40,7 +40,7 @@ export async function putManga(req, res) {
         res.status(201).json(updatedManga)
     }catch(error){
         console.error("Error updating your manga", error)
-        res.status(500).json({error:"Internal server error"})
+        res.status(500).json({error:"Internal server error", error: error.message})
     }
 }
 
@@ -51,6 +51,6 @@ export async function banManga(req, res) {
         res.status(204).json({message: "You`ve deleted this manga:", deletedManga})
     } catch(error){
         console.error("Your manga has NOT been deleted successfully...", error)
-        res.status(500).json({error: "Internal server error"})
+        res.status(500).json({error: "Internal server error", error: error.message})
     }    
 }

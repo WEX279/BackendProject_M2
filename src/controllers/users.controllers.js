@@ -30,7 +30,7 @@ export async function loginUser(req, res){
         })
 
     } catch (error) {
-        res.status(500).json({message: "Login error"})
+        res.status(500).json({message: "Login error", error: error.message})
     }
 }
 
@@ -64,7 +64,7 @@ export async function registerUser(req, res) {
         })
         
     } catch (error) {
-        res.status(500).json({message: "Internal server error"})
+        res.status(500).json({message: "Internal server error", error: error.message})
     }
 }
 
@@ -98,7 +98,7 @@ export async function logOut(req, res) {
             }
             console.log(token)
     } catch (error) {
-        res.status(500).json({message: "internal server error"})
+        res.status(500).json({message: "internal server error", error: error.message})
     }
 }
 
@@ -111,7 +111,7 @@ export async function getProfile(req, res) {
         return res.status(200).json({message: "user found correctly", userFinded: userFound})
         
     } catch (error) {
-        res.status(500).json({message: "internal server error"})
+        res.status(500).json({message: "internal server error", error: error.message})
     }
 }
 
@@ -121,7 +121,7 @@ export async function listUsers(req, res) {
         res.status(200).json(users);
     } catch (error) {
         console.error("Error al listar notas:", error);
-        res.status(500).json({ error: "Error interno del servidor" });
+        res.status(500).json({ error: "Error interno del servidor", error: error.message});
     }
 }
 
@@ -146,7 +146,7 @@ export async function deleteUser(req, res) {
     res.status(200).json({message: "Your account has been deleted correctly!"})
 
     } catch (error) {
-        res.status(500).json({error: "internal server error"})    
+        res.status(500).json({error: "internal server error", error: error.message})    
     }    
 }
 
@@ -164,7 +164,7 @@ export async function getManga(req, res) {
         res.status(200).json(manga)
     } catch(error) {
         console.error("Something happened trying to find your manga...", error)
-        res.status(500).json({error: "Internal server error"})
+        res.status(500).json({error: "Internal server error", error: error.message})
     }
 }
 
