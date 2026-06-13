@@ -38,6 +38,10 @@ export async function getMangaById(id) {
     return await Manga.findById(id)
 }
 
+export async function getMangabyName(name) {
+    return await Manga.findOne({name})
+}
+
 export async function createManga(data) {
     const newManga = new Manga(data)
     return await newManga.save()

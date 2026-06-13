@@ -25,11 +25,17 @@ router.get(
     usersControllers.getProfile,
 )
 
-router.get(
-    "profile/favourites",
+router.post(
+    "/profile/manga",
     validate,
-    usersControllers.addToFavs
+    usersControllers.getManga
 )
+
+// router.get(
+//     "/profile/favourites",
+//     validate,
+//     usersControllers.getFavs
+// )
 
 router.post(
     "profile/favourites",

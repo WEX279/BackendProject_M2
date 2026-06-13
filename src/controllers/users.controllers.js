@@ -1,4 +1,5 @@
 import * as Users from "../models/users.models.js"
+import { Manga, getAllManga, getMangaById, createManga, getMangabyName, updateManga, deleteManga } from "../models/manga.models.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
@@ -8,6 +9,7 @@ export async function loginUser(req, res){
         const {email, password} = req.body;
 
         const user = await Users.findUserbyEmail(email)
+
             if(!user){
                 return res.status(401).json({error: "Invalid credentials"})
             }
@@ -65,32 +67,6 @@ export async function registerUser(req, res) {
         res.status(500).json({message: "Internal server error"})
     }
 }
-
-export async function addToFavs(req, res) {
-    try {
-        const { email, name } = req.body;
-
-    const newManga = await Users.findUserbyEmail()
-    
-    console.log(newManga)
-
-    console.log(manga_id)
-    console.log(user_id)
-    const user = await User.getUserById(
-        userId,
-        {
-            $addToSet: {
-                favManga: manga_id
-            }
-        },
-        {new: true}
-    )
-    res.json({user})
-    } catch (error) {
-        res.status(500).json({message: "internal server error"})        
-    }
-}
-
 
 export async function logOut(req, res) {
     try {
@@ -172,4 +148,48 @@ export async function deleteUser(req, res) {
     } catch (error) {
         res.status(500).json({error: "internal server error"})    
     }    
+}
+
+// ----------------------------------------------------------------------------
+
+export async function getManga(req, res) {
+    try{
+        const {name} = req.body
+
+        const manga = await getMangabyName(name)
+
+        if(!manga){
+            return res.status(400).json({message: "manga not found"})
+        }
+        res.status(200).json(manga)
+    } catch(error) {
+        console.error("Something happened trying to find your manga...", error)
+        res.status(500).json({error: "Internal server error"})
+    }
+}
+
+export async function addToFavs(req, res) {
+    try {
+        const { email } = req.body;
+
+        const user = await Users.findUserbyEmail(email)
+        
+        console.log(user)
+
+        const userId = await Users.getUserById(id)
+        // {
+        //     $addToSet: {
+        //         favManga: manga_id
+        //     }
+        // },
+        // {new: true}
+
+
+        console.log(userId)
+        res.json(user)
+        return user
+        return userId
+    }catch (error) {
+        res.status(500).json({message: "internal server error"})        
+    }
 }
