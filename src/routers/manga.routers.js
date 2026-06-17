@@ -6,7 +6,7 @@ import mangaRules from "../middlewares/mangarules.middlewares.js"
 import validate from "../middlewares/validate.js"
 
 router.get("/",
-     mangaController.listManga
+     listManga
     )
 
 
@@ -17,14 +17,14 @@ router.get("/:id",
         .withMessage("Write an existing id, please")
     ],
     validate,
-    mangaController.getMangaId
+    getMangaId
 )
 
 
 router.post("/",
     mangaRules,
     validate,
-    mangaController.postManga
+    postManga
 )
 
 
@@ -35,7 +35,7 @@ router.put("/:id",
         .withMessage("Invalid ID format")
     ],
     validate,
-    mangaController.putManga
+    putManga
 )
 
 
@@ -46,7 +46,7 @@ router.delete("/:id",
         .withMessage("Invalid ID format")
     ],
     validate,
-    mangaController.banManga
+    banManga
 )
 
 export default router;
