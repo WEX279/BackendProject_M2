@@ -1,7 +1,7 @@
 import express from "express"
-import {param} from "express-validator";
+import { param } from "express-validator";
 const router = express.Router()
-import * as mangaController from "../controllers/manga.controllers.js"
+import { listManga, getMangaId, postManga, putManga, banManga } from "../controllers/manga.controllers.js"
 import mangaRules from "../middlewares/mangarules.middlewares.js"
 import validate from "../middlewares/validate.js"
 
@@ -44,7 +44,7 @@ router.delete("/:id",
         param("id")
         .isString()
         .withMessage("Invalid ID format")
-        ],
+    ],
     validate,
     mangaController.banManga
 )

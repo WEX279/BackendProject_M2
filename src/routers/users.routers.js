@@ -1,6 +1,6 @@
 import express from "express"
 const router = express.Router()
-import * as usersControllers from "../controllers/users.controllers.js"
+import { loginUser, registerUser, logOut, getProfile, listUsers, deleteUser, getManga, addToFavs} from "../controllers/users.controllers.js"
 import loginRules from "../middlewares/loginrules.middlewares.js";
 import registerRules from "../middlewares/registerUsers.middlewares.js";
 import verifyToken from "../middlewares/verifyToken.js"
@@ -9,58 +9,64 @@ import validate from "../middlewares/validate.js"
 
 router.get(
     "/",
-    usersControllers.listUsers
+    listUsers
 );
 
 router.post(
     "/register",
     registerRules,
     validate,
-    usersControllers.registerUser
+    registerUser
 );
 
 router.get(
     "/profile",
     verifyToken,
-    usersControllers.getProfile,
+    getProfile,
 )
 
 router.post(
     "/profile/manga",
     validate,
-    usersControllers.getManga
+    getManga
 )
 
 // router.get(
 //     "/profile/favourites",
 //     validate,
-//     usersControllers.getFavs
+//     getFavs
 // )
 
 router.post(
     "/profile/favourites",
     validate,
-    usersControllers.addToFavs
+    addToFavs
 )
+
+// router.delete(
+//     "/profile/favourites",
+//     validate,
+//     
+// )
 
 router.post(
     "/login",
     loginRules,
     validate,
-    usersControllers.loginUser
+    loginUser
 )
 
 router.post(
     "/logout",
     loginRules,
     validate,
-    usersControllers.logOut
+    logOut
 )
 
 router.delete(
     "/delete",
     verifyToken,
-    usersControllers.deleteUser
+    deleteUser
 )
 
 export default router

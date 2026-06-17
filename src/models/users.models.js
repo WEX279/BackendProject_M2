@@ -59,6 +59,3 @@ export async function getAllUsers() {
 export async function banUser(email) {
     return await User.findOneAndDelete({ email: email }) 
 }
-
-// --------------------------------------------------------
- 
