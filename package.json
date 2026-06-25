@@ -8,6 +8,8 @@
     "dev": "nodemon index.js",
     "test": "vitest",
     "coverage": "vitest run --coverage"
+  },"engine":{
+    "node": ">=18.0.0"
   },
   "repository": {
     "type": "git",
