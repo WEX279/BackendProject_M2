@@ -1,16 +1,16 @@
 import express from "express";
 const app = express();
 import cors from "cors"
-import mangaRoutes from "../BackendProject_M2/src/routers/manga.routers.js"
-import usersRoutes from "../BackendProject_M2/src/routers/users.routers.js"
+import mangaRoutes from "./src/routers/manga.routers.js"
+import usersRoutes from "./src/routers/users.routers.js"
 
 
 app.use(cors(
-    // {
-    // origin: ['http://localhost:5137', 'http://localhost:5137'],
-    // methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    // credentials: true
-// }
+    {
+    origin: ['http://localhost:5137', 'http://localhost:5137'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}
 ))
 
 app.use(express.json()) // req => usuario
