@@ -9,7 +9,12 @@ app.use(cors(
     {
     origin: 'https://backendproject-m2.onrender.com/api',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
+    credentials: true,
+    allowedHeaders:[
+        "content-type",
+        "acces-control-allow-origin"
+    ] 
+
 }
 ))
 
