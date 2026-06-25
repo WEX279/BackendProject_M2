@@ -7,7 +7,7 @@ import usersRoutes from "./src/routers/users.routers.js"
 
 app.use(cors(
     {
-    origin: ['http://localhost:5137', 'http://localhost:5137'],
+    // origin: ['http://localhost:5137', 'http://localhost:5137'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }
