@@ -8,14 +8,15 @@ import usersRoutes from "./src/routers/users.routers.js"
 app.use(cors(
     {
     origin: [
-        'https://backendproject-m2.onrender.com',
+        'https://backendproject-m2.onrender.com/api',
         'http://localhost:5173'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
     allowedHeaders:[
         "content-type",
-        "acces-control-allow-origin"
+        // "Authorization",
+        "access-control-allow-origin"
     ] 
 
 }
