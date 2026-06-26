@@ -7,7 +7,7 @@ import usersRoutes from "./src/routers/users.routers.js"
 
 app.use(cors(
     {
-    origin: 'https://backendproject-m2.onrender.com/api',
+    origin: 'https://backendproject-m2.onrender.com',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
     allowedHeaders:[
