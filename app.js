@@ -6,19 +6,19 @@ import usersRoutes from "./src/routers/users.routers.js"
 
 
 app.use(cors(
-//     {
-//     origin: [
-//         'https://backendproject-m2.onrender.com',
-//         'http://localhost:5173'
-//     ],
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     credentials: true,
-//     allowedHeaders:[
-//         "content-type",
-//         "acces-control-allow-origin"
-//     ] 
+    {
+    origin: [
+        'https://backendproject-m2.onrender.com',
+        'http://localhost:5173'
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+    allowedHeaders:[
+        "content-type",
+        "acces-control-allow-origin"
+    ] 
 
-// }
+}
 ))
 
 app.use(express.json()) // req => usuario
