@@ -36,18 +36,21 @@ export async function loginUser(req, res){
 
 export async function registerUser(req, res) {
     try {   
-        const {email, password} = req.body
+        const {email, password, confirmPassword} = req.body
         
         const existEmail = await findUserbyEmail(email)
         
         if (existEmail){
             return res.status(409).json({error: "this email has already been registered"})
         }
+        if(password !== confirmPassword){
+            return res.stsatus(401).json({error: "check crededntials"})
+        }
         const passwordHashed = await bcrypt.hash(password, 10)
         
         const newUser = await createUser({
             email,
-            password: passwordHashed,
+            password: passwordHashed
         });
         
         

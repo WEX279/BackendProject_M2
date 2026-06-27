@@ -11,6 +11,12 @@ const registerRules = [
     .isLength({max: 20})
     .isStrongPassword()
     .withMessage("Password is too weak"),
+
+    body("confirmPassword")
+    .notEmpty()
+    .isLength({max: 20})
+    .isStrongPassword()
+    .withMessage("Check both passwords!"),
 ]
 
 export default registerRules
