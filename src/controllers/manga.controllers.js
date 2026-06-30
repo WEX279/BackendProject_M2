@@ -2,7 +2,8 @@ import { getAllManga, getMangaById, getMangabyName, createManga, updateManga, de
 
 export async function listManga(req, res) {
     try{
-        const mangas = await getAllManga()
+        const {page, limit} = req.query;
+        const mangas = await getAllManga({page, limit})
         res.status(200).json(mangas)
     }catch(error){console.error("Something happened trying to add the mangas...", error)
         res.status(500).json({error:"Internal server error", error: error.message})
