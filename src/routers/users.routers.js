@@ -1,6 +1,6 @@
 import express from "express"
 const router = express.Router()
-import { loginUser, registerUser, logOut, getProfile, listUsers, deleteUser, getManga, addToFavs } from "../controllers/users.controllers.js"
+import { loginUser, registerUser, getProfile, listUsers, deleteUser, getManga, addToFavs } from "../controllers/users.controllers.js"
 import loginRules from "../middlewares/loginrules.middlewares.js";
 import registerRules from "../middlewares/registerUsers.middlewares.js";
 import verifyToken from "../middlewares/verifyToken.js"
@@ -54,13 +54,6 @@ router.post(
     loginRules,
     validate,
     loginUser
-)
-
-router.post(
-    "/logout",
-    loginRules,
-    validate,
-    logOut
 )
 
 router.delete(

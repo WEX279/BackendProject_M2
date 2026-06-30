@@ -32,8 +32,8 @@ export const Manga = mongoose.model("Manga", mangaSchema)
  
 export async function getAllManga({page=1, limit=20} = {}) {
     
-    const pageNum = parseInt(page, 10);
-    const limitNum = parseInt(limit, 10);
+    let pageNum = parseInt(page, 10);
+    let limitNum = parseInt(limit, 10);
     const skip = (pageNum = 1) * limitNum
     return await Manga.find().skip(skip).limit(limitNum)
 }

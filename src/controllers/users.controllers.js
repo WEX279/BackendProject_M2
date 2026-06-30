@@ -71,40 +71,6 @@ export async function registerUser(req, res) {
     }
 }
 
-export async function logOut(req, res) {
-    try {
-
-        const {email, password} = req.body;
-        
-        const user = await findUserbyEmail(email)
-
-            if(!user){
-                return res.status(404).json({message: "account not found"})
-            }
-            
-        const match = await bcrypt.compare(password, user.password)
-    
-            if(!match){
-                return res.status(400).json({message: "invalid credentials"})
-            }
-
-        const authHeader = req.headers.authorization;
-            if(!authHeader || !authHeader.startsWith("Bearer ")){
-                return res.status(401).json({message: "token not found or invalid format"})
-            }
-
-        const token = "";
-
-
-            if(!token){
-                res.status(200).json({message: "Loged out!"})
-            }
-            console.log(token)
-    } catch (error) {
-        res.status(500).json({message: "internal server error", error: error.message})
-    }
-}
-
 export async function getProfile(req, res) {
     try {
         const userId = req.user.id
