@@ -34,7 +34,7 @@ export async function getAllManga({page=1, limit=20} = {}) {
     
     let pageNum = parseInt(page, 10);
     let limitNum = parseInt(limit, 10);
-    const skip = (pageNum = 1) * limitNum
+    const skip = (pageNum - 1) * limitNum
     return await Manga.find().skip(skip).limit(limitNum)
 }
 
@@ -61,4 +61,3 @@ export async function updateManga(id, data) {
 export async function deleteManga(id){
     return await Manga.findByIdAndDelete(id)
 }
-
